@@ -8,6 +8,22 @@
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
 ![nginx](https://img.shields.io/badge/nginx-009639?style=flat&logo=nginx&logoColor=white)
 
+## 📸 Aperçu
+
+### Dashboard — Mode clair
+![Dashboard light](screenshots/01-dashboard-light.svg)
+
+### Statistiques & Heatmap
+![Statistiques](screenshots/02-stats.svg)
+
+### Sessions & Timer
+![Sessions et Timer](screenshots/03-sessions-timer.svg)
+
+### Mode sombre
+![Mode sombre](screenshots/04-dark-mode.svg)
+
+---
+
 ## 🚀 Lancer avec Docker
 
 ```bash
@@ -57,6 +73,11 @@ lisea/
 │   ├── stats.js          ← statistiques + heatmap
 │   ├── goals.js          ← objectifs + export/import
 │   └── main.js           ← point d'entrée
+├── screenshots/
+│   ├── 01-dashboard-light.svg
+│   ├── 02-stats.svg
+│   ├── 03-sessions-timer.svg
+│   └── 04-dark-mode.svg
 ├── nginx.conf
 ├── Dockerfile
 └── docker-compose.yml
