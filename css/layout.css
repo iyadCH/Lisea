@@ -1,0 +1,46 @@
+.app{display:grid;grid-template-columns:275px 1fr;min-height:100vh}
+.sidebar{background:var(--espresso);color:var(--cream);padding:var(--s6) var(--s5);display:flex;flex-direction:column;gap:var(--s5);position:sticky;top:0;height:100vh;overflow:auto}
+[data-theme="dark"] .sidebar{background:#110e0a;border-right:1px solid rgba(255,255,255,.06)}
+.brand{display:flex;align-items:center;gap:var(--s3)}
+.brand-name{font-family:var(--font-display);font-size:var(--text-xl);line-height:1;color:var(--cream)}
+.brand-tagline{font-size:var(--text-xs);color:var(--brown-faint);text-transform:uppercase;letter-spacing:.14em;margin-top:2px}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav-btn{display:flex;align-items:center;gap:var(--s3);padding:var(--s3) var(--s4);border-radius:var(--r-lg);color:rgba(196,168,130,.7);font-size:var(--text-sm);text-align:left;transition:all var(--tr);min-height:44px}
+.nav-btn:hover{background:rgba(255,255,255,.07);color:var(--cream)}
+.nav-btn.active{background:var(--gold);color:var(--espresso);font-weight:700}
+.sidebar-divider{border:none;border-top:1px solid rgba(255,255,255,.07)}
+.sp-box{padding:var(--s4);background:rgba(255,255,255,.05);border-radius:var(--r-xl);border:1px solid rgba(255,255,255,.07)}
+.sp-label{font-size:var(--text-xs);text-transform:uppercase;letter-spacing:.1em;color:var(--brown-faint)}
+.sp-value{font-family:var(--font-display);font-size:var(--text-lg);color:var(--gold-light);margin:var(--s1) 0}
+.sp-bar{height:5px;background:rgba(255,255,255,.1);border-radius:var(--r-full);overflow:hidden;margin-top:var(--s2)}
+.sp-fill{height:100%;background:var(--gold);border-radius:var(--r-full);transition:width .6s ease}
+.sp-sub{font-size:var(--text-xs);color:var(--brown-faint);margin-top:var(--s2)}
+.streak-box{display:flex;align-items:center;gap:var(--s3);padding:var(--s3) var(--s4);background:rgba(200,155,60,.12);border-radius:var(--r-xl);border:1px solid rgba(200,155,60,.2)}
+.streak-num{font-family:var(--font-display);font-size:var(--text-xl);color:var(--gold-light)}
+.streak-label{font-size:var(--text-xs);color:var(--brown-faint);line-height:1.4}
+.sidebar-footer{margin-top:auto}
+.theme-btn{display:flex;align-items:center;gap:var(--s3);padding:var(--s3) var(--s4);border-radius:var(--r-full);background:rgba(255,255,255,.07);color:rgba(196,168,130,.8);font-size:var(--text-sm);transition:all var(--tr);width:100%;min-height:44px}
+.theme-btn:hover{background:rgba(255,255,255,.12);color:var(--cream)}
+.main{display:flex;flex-direction:column;gap:var(--s8);padding:var(--s8) var(--s8) var(--s16);overflow:auto}
+.page{display:none}.page.active{display:flex;flex-direction:column;gap:var(--s6)}
+.content-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:var(--s6)}
+.right-col{display:grid;gap:var(--s5);align-content:start}
+.mobile-header{display:none}
+.mobile-nav{display:none}
+@media(max-width:1040px){
+  .app{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .mobile-header{display:flex;justify-content:space-between;align-items:center;padding:var(--s4) var(--s5);background:var(--espresso);position:sticky;top:0;z-index:30;gap:var(--s3)}
+  [data-theme="dark"] .mobile-header{background:#110e0a}
+  .mobile-brand{font-family:var(--font-display);font-size:var(--text-lg);color:var(--cream)}
+  .mobile-theme{min-height:40px;padding:0 var(--s4);border-radius:var(--r-full);background:rgba(255,255,255,.1);color:var(--cream);font-size:var(--text-sm)}
+  .mobile-nav{display:flex;background:var(--espresso);border-top:1px solid rgba(255,255,255,.07);position:sticky;top:60px;z-index:29;overflow-x:auto}
+  [data-theme="dark"] .mobile-nav{background:#110e0a}
+  .mobile-nav-btn{flex:1;min-width:80px;padding:var(--s3) var(--s2);color:rgba(196,168,130,.6);font-size:11px;text-align:center;border-bottom:2px solid transparent;transition:all var(--tr);min-height:48px;display:flex;flex-direction:column;align-items:center;gap:2px}
+  .mobile-nav-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+  .content-grid{grid-template-columns:1fr}
+  .main{padding:var(--s5) var(--s4) var(--s12)}
+}
+@media(max-width:600px){
+  .content-grid{grid-template-columns:1fr}
+}

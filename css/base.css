@@ -1,0 +1,42 @@
+:root {
+  --cream: #f9f3e8; --cream-dark: #f0e8d5; --cream-deep: #e8dcc5;
+  --gold: #c89b3c; --gold-light: #dbb96a; --gold-pale: #f2e4c4; --gold-deep: #a07828;
+  --espresso: #2d1f0e; --brown-mid: #5c3d1e; --brown-light: #9b6e42; --brown-faint: #c4a882;
+  --white: #fffdf8;
+  --color-bg: var(--cream); --color-surface: var(--white); --color-surface-2: var(--cream-dark);
+  --color-border: rgba(45,31,14,.12); --color-text: var(--espresso);
+  --color-muted: var(--brown-mid); --color-faint: var(--brown-light);
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Lato', 'Helvetica Neue', sans-serif;
+  --text-xs: clamp(.72rem,.67rem + .25vw,.85rem);
+  --text-sm: clamp(.85rem,.78rem + .35vw,.95rem);
+  --text-base: clamp(.95rem,.9rem + .25vw,1.05rem);
+  --text-lg: clamp(1.1rem,1rem + .6vw,1.4rem);
+  --text-xl: clamp(1.4rem,1.1rem + 1.2vw,2.1rem);
+  --text-2xl: clamp(1.9rem,1.1rem + 2.3vw,3.2rem);
+  --s1:.25rem;--s2:.5rem;--s3:.75rem;--s4:1rem;--s5:1.25rem;
+  --s6:1.5rem;--s8:2rem;--s10:2.5rem;--s12:3rem;--s16:4rem;
+  --r-sm:.375rem;--r-md:.5rem;--r-lg:.75rem;--r-xl:1rem;--r-2xl:1.5rem;--r-full:9999px;
+  --sh-sm:0 2px 8px rgba(45,31,14,.07);--sh-md:0 8px 28px rgba(45,31,14,.1);
+  --tr:200ms cubic-bezier(0.16,1,0.3,1);
+}
+[data-theme="dark"] {
+  --color-bg:#1a1410;--color-surface:#211c17;--color-surface-2:#2a231b;
+  --color-border:rgba(255,255,255,.09);--color-text:#e8dfd0;
+  --color-muted:#b8a080;--color-faint:#7a6040;
+  --white:#211c17;--cream:#2a231b;--cream-dark:#231e18;--cream-deep:#1e1a14;
+  --gold:#dbb96a;--gold-light:#e8cc88;--gold-pale:rgba(200,155,60,.15);--gold-deep:#c89b3c;
+  --espresso:#e8dfd0;--brown-faint:#7a6040;
+  --sh-sm:0 2px 8px rgba(0,0,0,.25);--sh-md:0 8px 28px rgba(0,0,0,.35);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:none;text-size-adjust:none;scroll-behavior:smooth}
+body{font-family:var(--font-body);font-size:var(--text-base);line-height:1.6;
+  background:var(--color-bg);color:var(--color-text);min-height:100vh;
+  transition:background var(--tr),color var(--tr)}
+img,svg{display:block;max-width:100%;height:auto}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:var(--r-sm)}
+::selection{background:rgba(200,155,60,.22)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
