@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Lisea — Suivi de lecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css"/>
+<link rel="stylesheet" href="css/layout.css"/>
+<link rel="stylesheet" href="css/components.css"/>
+<link rel="stylesheet" href="css/pages.css"/>
+</head>
+<body>
+<a class="sr-only" href="#main">Aller au contenu</a>
+<div id="toastContainer" aria-live="polite"></div>
+<div id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+  <div class="confirm-box">
+    <div class="confirm-title" id="confirmTitle">Confirmer la suppression</div>
+    <div class="confirm-sub" id="confirmSub">Cette action est irréversible.</div>
+    <div class="confirm-actions">
+      <button class="btn-cancel" id="confirmCancel">Annuler</button>
+      <button class="btn-danger" id="confirmOk">Supprimer</button>
+    </div>
+  </div>
+</div>
+<div id="onboarding" role="dialog" aria-modal="true">
+  <div class="ob-box">
+    <div class="ob-step active"><div class="ob-icon">📚</div><div class="ob-title">Bienvenue sur Lisea</div><div class="ob-desc">Suis ta progression de lecture, enregistre tes sessions et visualise tes statistiques.</div></div>
+    <div class="ob-step"><div class="ob-icon">🔍</div><div class="ob-title">Cherche des livres</div><div class="ob-desc">Open Library — couverture, auteur et pages récupérés automatiquement.</div></div>
+    <div class="ob-step"><div class="ob-icon">⏱</div><div class="ob-title">Enregistre tes sessions</div><div class="ob-desc">Timer intégré. Tes stats se mettent à jour en temps réel.</div></div>
+    <div class="ob-dots"><div class="ob-dot active"></div><div class="ob-dot"></div><div class="ob-dot"></div></div>
+    <div class="ob-actions"><button class="btn-cancel" id="obSkip">Passer</button><button class="btn-gold" id="obNext">Suivant →</button></div>
+  </div>
+</div>
+<header class="mobile-header">
+  <div class="mobile-brand">Lisea</div>
+  <button class="mobile-theme" data-theme-toggle aria-label="Thème">☾</button>
+</header>
+<nav class="mobile-nav">
+  <button class="mobile-nav-btn active" data-page="library">📚<span>Livres</span></button>
+  <button class="mobile-nav-btn" data-page="sessions">⏱<span>Sessions</span></button>
+  <button class="mobile-nav-btn" data-page="stats">📊<span>Stats</span></button>
+  <button class="mobile-nav-btn" data-page="goals">🎯<span>Objectifs</span></button>
+</nav>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand">
+    <svg width="38" height="38" viewBox="0 0 40 40" fill="none">
+      <path d="M6 10v22c5 0 11 2 14 6V12C17 8 11 9 6 10Z" stroke="var(--gold)" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M34 10v22c-5 0-11 2-14 6V12c3-4 9-3 14-2Z" stroke="var(--gold)" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M20 12v26" stroke="var(--gold)" stroke-width="1.5"/>
+    </svg>
+    <div><div class="brand-name">Lisea</div><div class="brand-tagline">Suivi de lecture</div></div>
+  </div>
+  <nav class="nav">
+    <button class="nav-btn active" data-page="library">📚 Bibliothèque</button>
+    <button class="nav-btn" data-page="sessions">⏱ Sessions</button>
+    <button class="nav-btn" data-page="stats">📊 Statistiques</button>
+    <button class="nav-btn" data-page="goals">🎯 Objectifs</button>
+  </nav>
+  <hr class="sidebar-divider">
+  <div class="sp-box">
+    <div class="sp-label">Avancement global</div>
+    <div class="sp-value" id="spValue">0 pages lues</div>
+    <div class="sp-bar"><div class="sp-fill" id="spFill" style="width:0%"></div></div>
+    <div class="sp-sub" id="spSub">0%</div>
+  </div>
+  <div class="streak-box">
+    <div class="streak-num" id="streakNum">0</div>
+    <div class="streak-label">🔥 jours consécutifs</div>
+  </div>
+  <div class="sidebar-footer">
+    <button class="theme-btn" data-theme-toggle>☾ Changer de thème</button>
+  </div>
+</aside>
+<main class="main" id="main">
+
+<div class="page active" id="page-library">
+  <section class="hero">
+    <div>
+      <div class="hero-eyebrow">Lisea · Suivi de lecture</div>
+      <h1 class="hero-title">Chaque livre<br><em>raconte ta progression</em></h1>
+      <p class="hero-desc">Ctrl+K pour rechercher · sessions · stats avancées</p>
+      <div class="hero-actions">
+        <button class="btn-gold" id="heroSearch">🔍 Chercher un livre</button>
+        <button class="btn-outline" id="seedDemo">Charger la démo</button>
+      </div>
+    </div>
+    <div class="mini-books" aria-hidden="true">
+      <div class="mini-book" style="height:85px;background:linear-gradient(180deg,#f2e4c4,#c89b3c)"></div>
+      <div class="mini-book" style="height:112px;background:linear-gradient(180deg,#e8d5a8,#a07828)"></div>
+      <div class="mini-book" style="height:72px;background:linear-gradient(180deg,#f5edd8,#dbb96a)"></div>
+    </div>
+  </section>
+  <section class="stats-row">
+    <div class="stat-card"><div class="stat-icon">📚</div><div class="stat-label">Total</div><div class="stat-number" id="stTotal">0</div></div>
+    <div class="stat-card"><div class="stat-icon">📖</div><div class="stat-label">En cours</div><div class="stat-number" id="stReading">0</div></div>
+    <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-label">Terminés</div><div class="stat-number" id="stDone">0</div></div>
+    <div class="stat-card"><div class="stat-icon">📄</div><div class="stat-label">Pages lues</div><div class="stat-number" id="stPages">0</div></div>
+  </section>
+  <section class="card">
+    <h2 class="card-title">Trouver un livre</h2>
+    <p class="card-sub">Raccourci global : Ctrl+K</p>
+    <div class="search-bar">
+      <input id="searchInput" class="search-input" type="search" placeholder="Dune, Camus, Le Petit Prince…"/>
+      <button id="searchBtn" class="search-btn">🔍 Rechercher</button>
+    </div>
+    <div id="searchStatus" class="status-line"></div>
+    <div id="searchResults" class="results-list"></div>
+  </section>
+  <div class="content-grid">
+    <section class="card">
+      <div class="lib-toolbar">
+        <input id="libSearch" class="lib-search" type="search" placeholder="Chercher dans ma bibliothèque…"/>
+        <select id="filterStatus" class="filter-sel">
+          <option value="all">Tous</option><option value="reading">En cours</option>
+          <option value="finished">Terminés</option><option value="planned">À lire</option>
+        </select>
+        <select id="sortBooks" class="filter-sel">
+          <option value="date">Date</option><option value="title">Titre</option>
+          <option value="author">Auteur</option><option value="progress">Progression</option><option value="rating">Note</option>
+        </select>
+        <div class="view-toggle">
+          <button class="view-btn active" id="viewList" aria-pressed="true">☰</button>
+          <button class="view-btn" id="viewGrid" aria-pressed="false">⊞</button>
+        </div>
+      </div>
+      <div id="bookList" class="book-list"></div>
+    </section>
+    <div class="right-col">
+      <section class="card">
+        <h3 class="card-title">Mettre à jour</h3>
+        <div class="form-grid">
+          <div><div class="f-label">Livre</div><select id="bookSelect" class="f-select"></select></div>
+          <div class="two-cols">
+            <div><div class="f-label">Page actuelle</div><input id="currentPage" class="f-input" type="number" min="0"/></div>
+            <div><div class="f-label">Statut</div>
+              <select id="statusSelect" class="f-select">
+                <option value="reading">En cours</option><option value="finished">Terminé</option><option value="planned">À lire</option>
+              </select>
+            </div>
+          </div>
+          <div><div class="f-label">Note</div><div class="star-picker" id="ratingPicker"></div></div>
+          <div><div class="f-label">Tags</div><input id="tagsInput" class="f-input" type="text" placeholder="Roman, SF…"/></div>
+          <div><div class="f-label">Notes</div><textarea id="notesInput" class="f-textarea" placeholder="Tes réflexions…"></textarea></div>
+          <button id="updateBtn" class="save-btn">Enregistrer</button>
+        </div>
+      </section>
+      <section class="card">
+        <h3 class="card-title">Pages restantes</h3>
+        <div id="remainChart" class="chart-bars"></div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page-sessions">
+  <section class="card">
+    <h2 class="card-title">Timer de lecture</h2>
+    <div class="timer-row">
+      <div><div class="timer-display" id="timerDisplay">00:00:00</div><div style="font-size:var(--text-xs);color:var(--color-faint);margin-top:4px" id="timerStatus">Arrêté</div></div>
+      <button id="timerStart" class="btn-gold" style="min-height:44px">▶ Démarrer</button>
+      <button id="timerPause" class="btn-cancel" style="min-height:44px">⏸ Pause</button>
+      <button id="timerReset" class="icon-btn" style="width:44px;height:44px" title="Reset">↺</button>
+    </div>
+  </section>
+  <section class="card">
+    <h2 class="card-title">Enregistrer une session</h2>
+    <div class="session-form-row">
+      <div><div class="f-label">Livre</div><select id="sessionBook" class="f-select"></select></div>
+      <div><div class="f-label">Pages lues</div><input id="sessionPages" class="f-input" type="number" min="1"/></div>
+      <div><div class="f-label">Durée (min)</div><input id="sessionDuration" class="f-input" type="number" min="1"/></div>
+      <div><div class="f-label">Date</div><input id="sessionDate" class="f-input" type="date"/></div>
+      <button id="addSessionBtn" class="save-btn" style="white-space:nowrap">+ Ajouter</button>
+    </div>
+  </section>
+  <section class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--s5)">
+      <h2 class="card-title" style="margin-bottom:0">Historique</h2>
+      <select id="sessionFilter" class="filter-sel"></select>
+    </div>
+    <div id="sessionList" class="sessions-list"></div>
+  </section>
+</div>
+
+<div class="page" id="page-stats">
+  <div class="stats-big-grid">
+    <div class="big-stat"><div class="big-stat-num" id="bigSpeed">0</div><div class="big-stat-label">pages/heure</div></div>
+    <div class="big-stat"><div class="big-stat-num" id="bigDailyAvg">0</div><div class="big-stat-label">pages/jour</div></div>
+    <div class="big-stat"><div class="big-stat-num" id="bigTotalTime">0h</div><div class="big-stat-label">temps total</div></div>
+  </div>
+  <div class="content-grid">
+    <section class="card"><h2 class="card-title">Pages / mois</h2><div id="monthChart" class="month-bars"></div></section>
+    <section class="card"><h2 class="card-title">Top progression</h2><div id="topBooks" class="top-books"></div></section>
+  </div>
+  <section class="card">
+    <h2 class="card-title">Activité annuelle</h2>
+    <p class="card-sub">Pages lues par jour sur les 12 derniers mois</p>
+    <div id="heatmapMonths" class="heatmap-months"></div>
+    <div id="heatmap" class="heatmap"></div>
+    <div style="display:flex;gap:var(--s3);align-items:center;margin-top:var(--s4);font-size:var(--text-xs);color:var(--color-faint)">
+      <span>Moins</span>
+      <div style="display:flex;gap:3px">
+        <div class="heatmap-cell"></div><div class="heatmap-cell" data-level="1"></div>
+        <div class="heatmap-cell" data-level="2"></div><div class="heatmap-cell" data-level="3"></div><div class="heatmap-cell" data-level="4"></div>
+      </div>
+      <span>Plus</span>
+    </div>
+  </section>
+</div>
+
+<div class="page" id="page-goals">
+  <div class="content-grid">
+    <section class="card">
+      <h2 class="card-title">Objectif annuel</h2>
+      <div class="goal-ring-wrap">
+        <div class="goal-ring">
+          <svg width="140" height="140" viewBox="0 0 140 140">
+            <circle cx="70" cy="70" r="58" stroke="var(--cream-deep)" stroke-width="10" fill="none"/>
+            <circle id="goalRingCircle" cx="70" cy="70" r="58" stroke="var(--gold)" stroke-width="10" fill="none"
+              stroke-linecap="round" stroke-dasharray="364.4" stroke-dashoffset="364.4" style="transition:stroke-dashoffset .8s ease"/>
+          </svg>
+          <div class="goal-ring-text">
+            <div class="goal-ring-num" id="goalDone">0</div>
+            <div class="goal-ring-label">sur <span id="goalTarget">10</span></div>
+          </div>
+        </div>
+        <div class="goal-inputs">
+          <div><div class="f-label">Livres / an</div><input id="goalInput" class="f-input" type="number" min="1" value="10"/></div>
+          <div style="display:flex;align-items:flex-end"><button id="saveGoalBtn" class="save-btn">OK</button></div>
+        </div>
+      </div>
+    </section>
+    <div style="display:grid;gap:var(--s5)">
+      <section class="card">
+        <h2 class="card-title">Objectif mensuel</h2>
+        <div class="form-grid">
+          <div><div class="f-label">Pages / mois</div><input id="monthlyGoalInput" class="f-input" type="number"/></div>
+          <button id="saveMonthlyBtn" class="save-btn">Enregistrer</button>
+          <div id="monthlyProgress"></div>
+        </div>
+      </section>
+      <section class="card">
+        <h2 class="card-title">Objectif hebdomadaire</h2>
+        <div class="form-grid">
+          <div><div class="f-label">Pages / semaine</div><input id="weeklyGoalInput" class="f-input" type="number"/></div>
+          <button id="saveWeeklyBtn" class="save-btn">Enregistrer</button>
+          <div id="weeklyProgress"></div>
+        </div>
+      </section>
+      <section class="card">
+        <h2 class="card-title">Export / Import</h2>
+        <p style="font-size:var(--text-sm);color:var(--color-muted);margin-bottom:var(--s3)">Sauvegarde ou restaure ta bibliothèque JSON.</p>
+        <div class="export-row">
+          <button id="exportBtn" class="exp-btn primary">⬇ Exporter JSON</button>
+          <label class="exp-btn secondary" style="cursor:pointer">⬆ Importer JSON<input id="importInput" type="file" accept=".json" style="display:none"/></label>
+        </div>
+      </section>
+    </div>
+  </div>
+  <section class="card">
+    <h2 class="card-title">À lire</h2>
+    <div id="plannedList" class="top-books"></div>
+  </section>
+</div>
+
+</main>
+</div>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+services:
+  lisea:
+    build: .
+    container_name: lisea-app
+    ports:
+      - "3000:80"
+    volumes:
+      - .:/usr/share/nginx/html:ro
+    restart: unless-stopped
